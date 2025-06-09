@@ -7,6 +7,7 @@ const pool = require("./db");
 app.use(cors());
 app.use(express.json());
 
+let pool;
 //Routes
 
 // 1. POST

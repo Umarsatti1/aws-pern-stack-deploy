@@ -1,11 +1,35 @@
-const Pool = require("pg").Pool;
+const { SSM } = require('aws-sdk');
+const { Pool } = require('pg');
 
-const pool = new Pool({
-    user: "postgres",
-    password: "password123",
-    host: "localhost",
-    port: 5432,
-    database: "tododb"
-});
+const ssm = new SSM();
 
-module.exports = pool;
+async function getParams() {
+  const names = [
+    '/pern/PGUSER',
+    '/pern/PGPASSWORD',
+    '/pern/PGHOST',
+    '/pern/PGPORT',
+    '/pern/PGDATABASE'
+  ];
+
+  const params = {
+    Names: names,
+    WithDecryption: true
+  };
+
+  const result = await ssm.getParameters(params).promise();
+
+  const paramMap = Object.fromEntries(
+    result.Parameters.map(p => [p.Name.split('/').pop(), p.Value])
+  );
+
+  return new Pool({
+    user: paramMap.PGUSER,
+    password: paramMap.PGPASSWORD,
+    host: paramMap.PGHOST,
+    port: parseInt(paramMap.PGPORT, 10),
+    database: paramMap.PGDATABASE
+  });
+}
+
+module.exports = getParams;
