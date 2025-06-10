@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: pern-local-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - pern_network
+    healthcheck: # Add this block
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pern-local-server
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    networks:
+      - pern_network
+
+  client:
+    build:
+      context: ./client
+    container_name: pern-local-client
+    depends_on:
+      - server
+    ports:
+      - "3000:80"
+    networks:
+      - pern_network
+
+volumes:
+  db-data:
+
+networks:
+  # Define a custom network to allow services to communicate by name
+  pern_network:
+    driver: bridge
