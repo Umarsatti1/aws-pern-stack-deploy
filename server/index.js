@@ -2,9 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const poolPromise = require("./db");
+const createTableIfNotExists = require("./initSchema");
 
 app.use(cors());
 app.use(express.json());
+
+(async () => {
+  await createTableIfNotExists();
+})();
 
 app.post("/todos", async (req, res) => {
   try {

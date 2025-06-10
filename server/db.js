@@ -30,7 +30,8 @@ async function getDBCredentialsFromSSM() {
     password: paramMap.DB_PASSWORD,
     host: paramMap.DB_HOST,
     port: parseInt(paramMap.DB_PORT, 10),
-    database: paramMap.DB_NAME
+    database: paramMap.DB_NAME,
+    ssl: { rejectUnauthorized: false }
   };
 }
 
