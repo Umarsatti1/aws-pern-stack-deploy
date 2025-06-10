@@ -24,14 +24,13 @@ Before deploying to AWS, ensure your PERN application runs correctly on your loc
 
 1.  **Start Backend Server:**
     ```bash
-    cd client # This should be 'server' based on your previous description
+    cd server/
     node index.js
     ```
-    *Correction*: This command should be run in the `server` directory.
 
 2.  **Start Frontend Development Server:**
     ```bash
-    cd client
+    cd client/
     npm start
     ```
 
