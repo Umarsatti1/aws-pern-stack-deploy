@@ -8,7 +8,7 @@ apt update -y
 apt upgrade -y
 
 # 2. Install required packages
-# 'nginx': Web server for serving the React frontend and proxying API requests.
+# 'nginx': Web server for serving the pern-app frontend and proxying API requests.
 # 'nodejs': JavaScript runtime for the backend.
 # 'npm': Node.js package manager.
 # 'git': Version control system to clone your application repository.
@@ -37,32 +37,32 @@ npm install
 
 # 6. Install frontend dependencies and build
 # 'cd ../client': Navigates to the frontend client directory.
-# 'npm install': Installs all dependencies for the React application.
-# 'npm run build': Creates a production-ready build of your React application in the 'build' directory.
+# 'npm install': Installs all dependencies for the pern-app application.
+# 'npm run build': Creates a production-ready build of your pern-app application in the 'build' directory.
 cd ../client
 npm install
 npm run build
 
-# 7. Copy React build to Nginx directory
-# 'rm -rf /var/www/react-app': Removes any existing 'react-app' directory to ensure a clean copy.
-# 'cp -r build /var/www/react-app': Copies the compiled React build files to the Nginx web root directory.
-rm -rf /var/www/react-app
-cp -r build /var/www/react-app
+# 7. Copy pern-app build to Nginx directory
+# 'rm -rf /var/www/pern-app': Removes any existing 'pern-app' directory to ensure a clean copy.
+# 'cp -r build /var/www/pern-app': Copies the compiled pern-app build files to the Nginx web root directory.
+rm -rf /var/www/pern-app
+cp -r build /var/www/pern-app
 
 # 8. Configure Nginx
 # This section configures Nginx to:
 # - Listen on port 80 (standard HTTP).
-# - Serve static files (your React frontend) from '/var/www/react-app'.
+# - Serve static files (your pern-app frontend) from '/var/www/pern-app'.
 # - Handle client-side routing by trying files and falling back to 'index.html'.
 # - Proxy API requests starting with '/todos' to your Node.js backend running on 'http://localhost:5000'.
-# 'cat <<EOF > /etc/nginx/sites-available/react': Creates a new Nginx server block configuration.
+# 'cat <<EOF > /etc/nginx/sites-available/pern-app': Creates a new Nginx server block configuration.
 # 'rm -f /etc/nginx/sites-enabled/default': Removes the default Nginx site configuration.
 # 'ln -s ...': Creates a symbolic link to enable the new Nginx configuration.
 # 'nginx -t && systemctl reload nginx': Tests the Nginx configuration for syntax errors and reloads Nginx to apply changes.
-cat <<EOF > /etc/nginx/sites-available/react
+cat <<EOF > /etc/nginx/sites-available/pern-app
 server {
     listen 80;
-    root /var/www/react-app;
+    root /var/www/pern-app;
     index index.html;
     server_name _;
 
@@ -82,7 +82,7 @@ server {
 EOF
 
 rm -f /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/react /etc/nginx/sites-enabled/react
+ln -s /etc/nginx/sites-available/pern-app /etc/nginx/sites-enabled/pern-app
 
 nginx -t && systemctl reload nginx
 
