@@ -21,7 +21,7 @@ This project demonstrates how to set up and deploy a full-stack PERN application
 
 Explore the different deployment strategies implemented in this repository.
 
-### Local Development (Dockerized)
+### 1. Local Development (Dockerized)
 
 This branch (`local-docker`) provides instructions and configuration (using `docker-compose.yml`) to run your PERN application locally within Docker containers. This approach offers environment consistency and simplifies local setup.
 
@@ -42,7 +42,7 @@ This branch (`local-docker`) provides instructions and configuration (using `doc
 
 ---
 
-### AWS Deployment (Manual EC2/RDS)
+### 2. AWS Deployment (Manual EC2/RDS)
 
 The `aws-deploy-manual` branch contains the detailed steps and configuration for manually deploying your PERN application on AWS using individual services like EC2, RDS, VPC, IAM, and Systems Manager. This approach is useful for understanding the underlying AWS infrastructure.
 
