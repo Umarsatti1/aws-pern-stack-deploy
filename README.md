@@ -39,7 +39,8 @@ This branch (`local-docker`) provides instructions and configuration (using `doc
 3.  **Follow the setup instructions** within the `README.md` file on that branch.
 
 **[Click here to view the `local-docker` branch instructions](https://github.com/Umarsatti1/aws-pern-stack-deploy/tree/local-docker)**
-*(Remember to replace `YOUR_USERNAME` and `YOUR_REPOSITORY_NAME` with your actual GitHub details)*
+
+--
 
 ### AWS Deployment (Manual EC2/RDS)
 
@@ -61,7 +62,8 @@ The `aws-deploy-manual` branch contains the detailed steps and configuration for
 3.  **Follow the step-by-step guide** provided in the `README.md` file on that branch.
 
 **[Click here to view the `aws-deploy-manual` branch instructions](https://github.com/Umarsatti1/aws-pern-stack-deploy/tree/aws-deploy-manual)**
-*(Remember to replace `YOUR_USERNAME` and `YOUR_REPOSITORY_NAME` with your actual GitHub details)*
+
+--
 
 ## Branch Navigation
 
@@ -79,4 +81,4 @@ This repository is structured into several branches, each focusing on a specific
 * **Database:** PostgreSQL
 * **Deployment:** AWS (EC2, RDS, VPC, IAM, Systems Manager), Docker, Nginx, PM2
 
----
+--
