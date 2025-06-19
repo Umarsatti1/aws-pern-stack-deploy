@@ -1,0 +1,96 @@
+name: Deploy to ECS Fargate
+
+on:
+  push:
+    branches:
+      - aws-ecs-cicd-deploy
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  deploy:
+    name: Build, Push, Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # === Build and push backend ===
+      - name: Build and Push Backend Image
+        working-directory: ./server
+        run: |
+          docker build -t ${{ secrets.ECR_BACKEND_REPO }} .
+          docker push ${{ secrets.ECR_BACKEND_REPO }}
+
+      # === Build and push frontend ===
+      - name: Build and Push Frontend Image
+        working-directory: ./client
+        run: |
+          docker build -t ${{ secrets.ECR_FRONTEND_REPO }} .
+          docker push ${{ secrets.ECR_FRONTEND_REPO }}
+
+      # === Deploy ECS with new task def ===
+      - name: Deploy ECS Service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: |
+            {
+              "family": "pern-app-task",
+              "networkMode": "awsvpc",
+              "requiresCompatibilities": ["FARGATE"],
+              "cpu": "512",
+              "memory": "1024",
+              "executionRoleArn": "${{ secrets.ECS_TASK_ROLE_ARN }}",
+              "containerDefinitions": [
+                {
+                  "name": "server",
+                  "image": "${{ secrets.ECR_BACKEND_REPO }}",
+                  "portMappings": [
+                    { "containerPort": 5000, "protocol": "tcp" }
+                  ],
+                  "environment": [
+                    { "name": "NODE_ENV", "value": "production" },
+                    { "name": "AWS_REGION", "value": "${{ env.AWS_REGION }}" }
+                  ],
+                  "logConfiguration": {
+                    "logDriver": "awslogs",
+                    "options": {
+                      "awslogs-group": "/ecs/pern-app",
+                      "awslogs-region": "${{ env.AWS_REGION }}",
+                      "awslogs-stream-prefix": "ecs-server"
+                    }
+                  }
+                },
+                {
+                  "name": "client",
+                  "image": "${{ secrets.ECR_FRONTEND_REPO }}",
+                  "portMappings": [
+                    { "containerPort": 80, "protocol": "tcp" }
+                  ],
+                  "logConfiguration": {
+                    "logDriver": "awslogs",
+                    "options": {
+                      "awslogs-group": "/ecs/pern-app",
+                      "awslogs-region": "${{ env.AWS_REGION }}",
+                      "awslogs-stream-prefix": "ecs-client"
+                    }
+                  }
+                }
+              ]
+            }
+          service: ${{ secrets.ECS_SERVICE_NAME }}
+          cluster: ${{ secrets.ECS_CLUSTER_NAME }}
+          wait-for-service-stability: true
