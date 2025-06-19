@@ -24,3 +24,28 @@ yarn-debug.log*
 yarn-error.log*
 
 terraform/.terraform/
+
+# Ignore all generated Terraform files and local state
+terraform/*.tfstate
+terraform/*.tfstate.backup
+
+# Crash logs
+terraform/crash.log
+
+# Terraform plan output
+terraform/*.tfplan
+
+# Sensitive override files
+terraform/terraform.tfvars
+terraform/*.tfvars
+
+# Ignore .terraform directory (provider binaries, modules, etc.)
+terraform/.terraform/
+
+# Ignore override config files (often local-only)
+terraform/override.tf
+terraform/override.tf.json
+terraform/*_override.tf
+terraform/*_override.tf.json
+
+terraform/.terraform.lock.hcl
