@@ -3,6 +3,12 @@ const app = express();
 const cors = require("cors");
 const poolPromise = require("./db");
 const createTableIfNotExists = require("./initSchema");
+const AWS = require('aws-sdk');
+
+// Required to ensure SSM client works in ECS
+AWS.config.update({ region: process.env.AWS_REGION });
+
+const ssm = new AWS.SSM();
 
 app.use(cors());
 app.use(express.json());

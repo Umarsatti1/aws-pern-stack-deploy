@@ -6,11 +6,11 @@ let pool;
 async function getDBCredentialsFromSSM() {
   const ssm = new AWS.SSM({ region: process.env.AWS_REGION || "us-east-1" });
   const names = [
-    "/pern/DB_USER",
-    "/pern/DB_PASSWORD",
-    "/pern/DB_HOST",
-    "/pern/DB_NAME",
-    "/pern/DB_PORT"
+    "/pernapp/DB_USER",
+    "/pernapp/DB_PASSWORD",
+    "/pernapp/DB_HOST",
+    "/pernapp/DB_NAME",
+    "/pernapp/DB_PORT"
   ];
 
   const params = {
