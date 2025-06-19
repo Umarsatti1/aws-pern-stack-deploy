@@ -39,7 +39,8 @@ module "ecs" {
   server_image       = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/pern-backend:latest"
   client_image       = "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/pern-frontend:latest"
   region             = var.region
-  execution_role_arn = module.iam.ecs_task_role_arn
+  execution_role_arn = module.iam.execution_role_arn
+  task_role_arn      = module.iam.ecs_task_role_arn
   private_subnet_ids = module.vpc.private_subnets
   ecs_sg_id          = module.sg.ecs_sg_id
   service_sg_id      = module.sg.ecs_sg_id

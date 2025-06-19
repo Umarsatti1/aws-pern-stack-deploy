@@ -46,3 +46,8 @@ variable "client_image" {
   description = "Docker image for frontend"
   type        = string
 }
+
+variable "task_role_arn" {
+  description = "IAM role ARN for ECS task runtime (app-level access like SSM)"
+  type        = string
+}
