@@ -1,5 +1,5 @@
 variable "prefix" {
-  description = "Path prefix for the parameter names (e.g., /pern)"
+  description = "Path prefix for the parameter names"
   type        = string
   default     = "/pernapp"
 }

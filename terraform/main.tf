@@ -29,7 +29,7 @@ module "iam" {
   region      = var.region
   account_id  = var.account_id
   role_name   = "Tf-ECS-TaskExecutionRole"
-  ssm_prefix  = "/pern"
+  ssm_prefix  = "/pernapp"
 }
 
 module "ecs" {

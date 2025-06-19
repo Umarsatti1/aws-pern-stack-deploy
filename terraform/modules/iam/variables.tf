@@ -4,7 +4,7 @@ variable "role_name" {
 }
 
 variable "ssm_prefix" {
-  description = "Prefix of SSM parameter path (e.g. /pern)"
+  description = "Prefix of SSM parameter path"
   type        = string
 }
 
