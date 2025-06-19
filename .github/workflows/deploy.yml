@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - aws-ecs-cicd-deploy
+    paths-ignore:
+      - README.md
+      - terraform/**
+      - .gitignore
 
 env:
   AWS_REGION: us-east-1
