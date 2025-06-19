@@ -6,6 +6,7 @@ This repository provides a comprehensive guide for deploying a PERN (PostgreSQL,
 
 - [Project Overview](#project-overview)
 - [Deployment Options](#deployment-options)
+  - [Local Development](#local-development)
   - [Local Development (Dockerized)](#local-development-dockerized)
   - [AWS Deployment (Manual EC2/RDS)](#aws-deployment-manual-ec2rds)
 - [Branch Navigation](#branch-navigation)
@@ -21,7 +22,26 @@ This project demonstrates how to set up and deploy a full-stack PERN application
 
 Explore the different deployment strategies implemented in this repository.
 
-### 1. Local Development (Dockerized)
+### 1. Local Development
+
+This branch (`local`) provides instructions to run your PERN application locally.
+
+**Key Features:**
+* Frontend (React).
+* Backend (Node.js/Express).
+* Uses local **pgAdmin application** for the PostgreSQL database connection.
+
+**Get Started with Local Development:**
+1.  **Clone this repository** to your local machine.
+2.  **Switch to the `local` branch:**
+    ```bash
+    git checkout local
+    ```
+3.  **Follow the setup instructions** within the `README.md` file on that branch.
+
+**[Click here to view the `local` branch instructions](https://github.com/Umarsatti1/aws-pern-stack-deploy/tree/local)**
+
+### 2. Local Development (Dockerized)
 
 This branch (`local-docker`) provides instructions and configuration (using `docker-compose.yml`) to run your PERN application locally within Docker containers. This approach offers environment consistency and simplifies local setup.
 
@@ -42,7 +62,7 @@ This branch (`local-docker`) provides instructions and configuration (using `doc
 
 ---
 
-### 2. AWS Deployment (Manual EC2/RDS)
+### 3. AWS Deployment (Manual EC2/RDS)
 
 The `aws-deploy-manual` branch contains the detailed steps and configuration for manually deploying your PERN application on AWS using individual services like EC2, RDS, VPC, IAM, and Systems Manager. This approach is useful for understanding the underlying AWS infrastructure.
 
